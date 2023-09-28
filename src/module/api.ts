@@ -5,11 +5,8 @@
  * Open Source Asset and Quartermaster System
  * OpenAPI spec version: 0.2.0-dev
  */
-import axios from 'axios'
-import type {
-  AxiosRequestConfig,
-  AxiosResponse
-} from 'axios'
+import { customInstance } from './axiosClient';
+import type { BodyType } from './axiosClient';
 
 // https://stackoverflow.com/questions/49579094/typescript-conditional-types-filter-out-readonly-properties-pick-only-requir/49579497#49579497
 type IfEquals<X, Y, A = X, B = never> = (<T>() => T extends X ? 1 : 2) extends <
@@ -511,384 +508,426 @@ export interface Asset {
 
 
 
+// eslint-disable-next-line
+  type SecondParameter<T extends (...args: any) => any> = T extends (
+  config: any,
+  args: infer P,
+) => any
+  ? P
+  : never;
+
 
   /**
  * Fetch or update the profile of the current user.
  */
-export const accountsProfileRetrieve = <TData = AxiosResponse<void>>(
-     options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/api/v1/accounts/profile/`,options
-    );
-  }
-
+export const accountsProfileRetrieve = (
+    
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<void>(
+      {url: `/api/v1/accounts/profile/`, method: 'get'
+    },
+      options);
+    }
+  
 /**
  * Fetch or update the profile of the current user.
  */
-export const accountsProfileUpdate = <TData = AxiosResponse<void>>(
-     options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.put(
-      `/api/v1/accounts/profile/`,undefined,options
-    );
-  }
-
+export const accountsProfileUpdate = (
+    
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<void>(
+      {url: `/api/v1/accounts/profile/`, method: 'put'
+    },
+      options);
+    }
+  
 /**
  * Fetch or update the profile of the current user.
  */
-export const accountsProfilePartialUpdate = <TData = AxiosResponse<void>>(
-     options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.patch(
-      `/api/v1/accounts/profile/`,undefined,options
-    );
-  }
-
+export const accountsProfilePartialUpdate = (
+    
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<void>(
+      {url: `/api/v1/accounts/profile/`, method: 'patch'
+    },
+      options);
+    }
+  
 /**
  * Fetch information about asset events.
  */
-export const assetEventsList = <TData = AxiosResponse<PaginatedAssetEventWithAssetList>>(
-    params?: AssetEventsListParams, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/api/v1/asset-events/`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+export const assetEventsList = (
+    params?: AssetEventsListParams,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<PaginatedAssetEventWithAssetList>(
+      {url: `/api/v1/asset-events/`, method: 'get',
+        params
+    },
+      options);
+    }
+  
 /**
  * Fetch information about asset events.
  */
-export const assetEventsRetrieve = <TData = AxiosResponse<AssetEventWithAsset>>(
-    id: string, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/api/v1/asset-events/${id}/`,options
-    );
-  }
-
+export const assetEventsRetrieve = (
+    id: string,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<AssetEventWithAsset>(
+      {url: `/api/v1/asset-events/${id}/`, method: 'get'
+    },
+      options);
+    }
+  
 /**
  * Fetch information about asset models.
  */
-export const assetModelsList = <TData = AxiosResponse<PaginatedAssetModelList>>(
-    params?: AssetModelsListParams, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/api/v1/asset-models/`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+export const assetModelsList = (
+    params?: AssetModelsListParams,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<PaginatedAssetModelList>(
+      {url: `/api/v1/asset-models/`, method: 'get',
+        params
+    },
+      options);
+    }
+  
 /**
  * Fetch information about asset models.
  */
-export const assetModelsCreate = <TData = AxiosResponse<AssetModel>>(
-    assetModel: NonReadonly<AssetModel>, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/v1/asset-models/`,
-      assetModel,options
-    );
-  }
-
+export const assetModelsCreate = (
+    assetModel: BodyType<NonReadonly<AssetModel>>,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<AssetModel>(
+      {url: `/api/v1/asset-models/`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: assetModel
+    },
+      options);
+    }
+  
 /**
  * Fetch information about asset models.
  */
-export const assetModelsRetrieve = <TData = AxiosResponse<AssetModel>>(
-    slug: string, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/api/v1/asset-models/${slug}/`,options
-    );
-  }
-
-/**
- * Fetch information about asset models.
- */
-export const assetModelsUpdate = <TData = AxiosResponse<AssetModel>>(
+export const assetModelsRetrieve = (
     slug: string,
-    assetModel: NonReadonly<AssetModel>, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.put(
-      `/api/v1/asset-models/${slug}/`,
-      assetModel,options
-    );
-  }
-
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<AssetModel>(
+      {url: `/api/v1/asset-models/${slug}/`, method: 'get'
+    },
+      options);
+    }
+  
 /**
  * Fetch information about asset models.
  */
-export const assetModelsPartialUpdate = <TData = AxiosResponse<AssetModel>>(
+export const assetModelsUpdate = (
     slug: string,
-    patchedAssetModel: NonReadonly<PatchedAssetModel>, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.patch(
-      `/api/v1/asset-models/${slug}/`,
-      patchedAssetModel,options
-    );
-  }
-
+    assetModel: BodyType<NonReadonly<AssetModel>>,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<AssetModel>(
+      {url: `/api/v1/asset-models/${slug}/`, method: 'put',
+      headers: {'Content-Type': 'application/json', },
+      data: assetModel
+    },
+      options);
+    }
+  
 /**
  * Fetch information about asset models.
  */
-export const assetModelsDestroy = <TData = AxiosResponse<void>>(
-    slug: string, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.delete(
-      `/api/v1/asset-models/${slug}/`,options
-    );
-  }
-
+export const assetModelsPartialUpdate = (
+    slug: string,
+    patchedAssetModel: BodyType<NonReadonly<PatchedAssetModel>>,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<AssetModel>(
+      {url: `/api/v1/asset-models/${slug}/`, method: 'patch',
+      headers: {'Content-Type': 'application/json', },
+      data: patchedAssetModel
+    },
+      options);
+    }
+  
+/**
+ * Fetch information about asset models.
+ */
+export const assetModelsDestroy = (
+    slug: string,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<void>(
+      {url: `/api/v1/asset-models/${slug}/`, method: 'delete'
+    },
+      options);
+    }
+  
 /**
  * Fetch information about assets.
  */
-export const assetsList = <TData = AxiosResponse<PaginatedAssetWithNodeList>>(
-    params?: AssetsListParams, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/api/v1/assets/`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+export const assetsList = (
+    params?: AssetsListParams,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<PaginatedAssetWithNodeList>(
+      {url: `/api/v1/assets/`, method: 'get',
+        params
+    },
+      options);
+    }
+  
 /**
  * Fetch information about assets.
  */
-export const assetsRetrieve = <TData = AxiosResponse<AssetWithNode>>(
-    id: string, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/api/v1/assets/${id}/`,options
-    );
-  }
-
+export const assetsRetrieve = (
+    id: string,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<AssetWithNode>(
+      {url: `/api/v1/assets/${id}/`, method: 'get'
+    },
+      options);
+    }
+  
 /**
  * Takes a set of user credentials and returns an access and refresh JSON web
 token pair to prove the authentication of those credentials.
  */
-export const authTokenCreate = <TData = AxiosResponse<TokenObtainPair>>(
-    tokenObtainPair: NonReadonly<TokenObtainPair>, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/v1/auth/token/`,
-      tokenObtainPair,options
-    );
-  }
-
+export const authTokenCreate = (
+    tokenObtainPair: BodyType<NonReadonly<TokenObtainPair>>,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<TokenObtainPair>(
+      {url: `/api/v1/auth/token/`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: tokenObtainPair
+    },
+      options);
+    }
+  
 /**
  * Takes a refresh type JSON web token and returns an access type JSON web
 token if the refresh token is valid.
  */
-export const authTokenRefreshCreate = <TData = AxiosResponse<TokenRefresh>>(
-    tokenRefresh: NonReadonly<TokenRefresh>, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/v1/auth/token/refresh/`,
-      tokenRefresh,options
-    );
-  }
-
+export const authTokenRefreshCreate = (
+    tokenRefresh: BodyType<NonReadonly<TokenRefresh>>,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<TokenRefresh>(
+      {url: `/api/v1/auth/token/refresh/`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: tokenRefresh
+    },
+      options);
+    }
+  
 /**
  * Takes a token and indicates if it is valid.  This view provides no
 information about a token's fitness for a particular use.
  */
-export const authTokenVerifyCreate = <TData = AxiosResponse<TokenVerify>>(
-    tokenVerify: TokenVerify, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/v1/auth/token/verify/`,
-      tokenVerify,options
-    );
-  }
-
+export const authTokenVerifyCreate = (
+    tokenVerify: BodyType<TokenVerify>,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<TokenVerify>(
+      {url: `/api/v1/auth/token/verify/`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: tokenVerify
+    },
+      options);
+    }
+  
 /**
  * Fetch information about asset events.
  */
-export const changesetsList = <TData = AxiosResponse<PaginatedChangeSetSerializerWithCountList>>(
-    params?: ChangesetsListParams, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/api/v1/changesets/`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
+export const changesetsList = (
+    params?: ChangesetsListParams,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<PaginatedChangeSetSerializerWithCountList>(
+      {url: `/api/v1/changesets/`, method: 'get',
+        params
+    },
+      options);
+    }
+  
 /**
  * Fetch information about asset events.
  */
-export const changesetsRetrieve = <TData = AxiosResponse<ChangeSetSerializerWithCount>>(
-    id: string, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/api/v1/changesets/${id}/`,options
-    );
-  }
-
+export const changesetsRetrieve = (
+    id: string,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<ChangeSetSerializerWithCount>(
+      {url: `/api/v1/changesets/${id}/`, method: 'get'
+    },
+      options);
+    }
+  
 /**
  * Get the events in the changeset.
  */
-export const changesetsEventsRetrieve = <TData = AxiosResponse<ChangeSetSerializerWithCount>>(
-    id: string, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/api/v1/changesets/${id}/events/`,options
-    );
-  }
-
-/**
- * Fetch information about manufacturers.
- */
-export const manufacturersList = <TData = AxiosResponse<PaginatedManufacturerList>>(
-    params?: ManufacturersListParams, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/api/v1/manufacturers/`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
-/**
- * Fetch information about manufacturers.
- */
-export const manufacturersCreate = <TData = AxiosResponse<Manufacturer>>(
-    manufacturer: NonReadonly<Manufacturer>, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/v1/manufacturers/`,
-      manufacturer,options
-    );
-  }
-
-/**
- * Fetch information about manufacturers.
- */
-export const manufacturersRetrieve = <TData = AxiosResponse<Manufacturer>>(
-    slug: string, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/api/v1/manufacturers/${slug}/`,options
-    );
-  }
-
-/**
- * Fetch information about manufacturers.
- */
-export const manufacturersUpdate = <TData = AxiosResponse<Manufacturer>>(
-    slug: string,
-    manufacturer: NonReadonly<Manufacturer>, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.put(
-      `/api/v1/manufacturers/${slug}/`,
-      manufacturer,options
-    );
-  }
-
-/**
- * Fetch information about manufacturers.
- */
-export const manufacturersPartialUpdate = <TData = AxiosResponse<Manufacturer>>(
-    slug: string,
-    patchedManufacturer: NonReadonly<PatchedManufacturer>, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.patch(
-      `/api/v1/manufacturers/${slug}/`,
-      patchedManufacturer,options
-    );
-  }
-
-/**
- * Fetch information about manufacturers.
- */
-export const manufacturersDestroy = <TData = AxiosResponse<void>>(
-    slug: string, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.delete(
-      `/api/v1/manufacturers/${slug}/`,options
-    );
-  }
-
-/**
- * Fetch information about nodes.
- */
-export const nodesList = <TData = AxiosResponse<PaginatedNodeList>>(
-    params?: NodesListParams, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/api/v1/nodes/`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-
-/**
- * Fetch information about nodes.
- */
-export const nodesRetrieve = <TData = AxiosResponse<Node>>(
-    id: string, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/api/v1/nodes/${id}/`,options
-    );
-  }
-
-/**
- * Fetch information about nodes.
- */
-export const nodesUpdate = <TData = AxiosResponse<Node>>(
+export const changesetsEventsRetrieve = (
     id: string,
-    node: NonReadonly<Node>, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.put(
-      `/api/v1/nodes/${id}/`,
-      node,options
-    );
-  }
-
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<ChangeSetSerializerWithCount>(
+      {url: `/api/v1/changesets/${id}/events/`, method: 'get'
+    },
+      options);
+    }
+  
+/**
+ * Fetch information about manufacturers.
+ */
+export const manufacturersList = (
+    params?: ManufacturersListParams,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<PaginatedManufacturerList>(
+      {url: `/api/v1/manufacturers/`, method: 'get',
+        params
+    },
+      options);
+    }
+  
+/**
+ * Fetch information about manufacturers.
+ */
+export const manufacturersCreate = (
+    manufacturer: BodyType<NonReadonly<Manufacturer>>,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<Manufacturer>(
+      {url: `/api/v1/manufacturers/`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: manufacturer
+    },
+      options);
+    }
+  
+/**
+ * Fetch information about manufacturers.
+ */
+export const manufacturersRetrieve = (
+    slug: string,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<Manufacturer>(
+      {url: `/api/v1/manufacturers/${slug}/`, method: 'get'
+    },
+      options);
+    }
+  
+/**
+ * Fetch information about manufacturers.
+ */
+export const manufacturersUpdate = (
+    slug: string,
+    manufacturer: BodyType<NonReadonly<Manufacturer>>,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<Manufacturer>(
+      {url: `/api/v1/manufacturers/${slug}/`, method: 'put',
+      headers: {'Content-Type': 'application/json', },
+      data: manufacturer
+    },
+      options);
+    }
+  
+/**
+ * Fetch information about manufacturers.
+ */
+export const manufacturersPartialUpdate = (
+    slug: string,
+    patchedManufacturer: BodyType<NonReadonly<PatchedManufacturer>>,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<Manufacturer>(
+      {url: `/api/v1/manufacturers/${slug}/`, method: 'patch',
+      headers: {'Content-Type': 'application/json', },
+      data: patchedManufacturer
+    },
+      options);
+    }
+  
+/**
+ * Fetch information about manufacturers.
+ */
+export const manufacturersDestroy = (
+    slug: string,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<void>(
+      {url: `/api/v1/manufacturers/${slug}/`, method: 'delete'
+    },
+      options);
+    }
+  
 /**
  * Fetch information about nodes.
  */
-export const nodesPartialUpdate = <TData = AxiosResponse<Node>>(
+export const nodesList = (
+    params?: NodesListParams,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<PaginatedNodeList>(
+      {url: `/api/v1/nodes/`, method: 'get',
+        params
+    },
+      options);
+    }
+  
+/**
+ * Fetch information about nodes.
+ */
+export const nodesRetrieve = (
     id: string,
-    patchedNode: NonReadonly<PatchedNode>, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.patch(
-      `/api/v1/nodes/${id}/`,
-      patchedNode,options
-    );
-  }
-
-export type AccountsProfileRetrieveResult = AxiosResponse<void>
-export type AccountsProfileUpdateResult = AxiosResponse<void>
-export type AccountsProfilePartialUpdateResult = AxiosResponse<void>
-export type AssetEventsListResult = AxiosResponse<PaginatedAssetEventWithAssetList>
-export type AssetEventsRetrieveResult = AxiosResponse<AssetEventWithAsset>
-export type AssetModelsListResult = AxiosResponse<PaginatedAssetModelList>
-export type AssetModelsCreateResult = AxiosResponse<AssetModel>
-export type AssetModelsRetrieveResult = AxiosResponse<AssetModel>
-export type AssetModelsUpdateResult = AxiosResponse<AssetModel>
-export type AssetModelsPartialUpdateResult = AxiosResponse<AssetModel>
-export type AssetModelsDestroyResult = AxiosResponse<void>
-export type AssetsListResult = AxiosResponse<PaginatedAssetWithNodeList>
-export type AssetsRetrieveResult = AxiosResponse<AssetWithNode>
-export type AuthTokenCreateResult = AxiosResponse<TokenObtainPair>
-export type AuthTokenRefreshCreateResult = AxiosResponse<TokenRefresh>
-export type AuthTokenVerifyCreateResult = AxiosResponse<TokenVerify>
-export type ChangesetsListResult = AxiosResponse<PaginatedChangeSetSerializerWithCountList>
-export type ChangesetsRetrieveResult = AxiosResponse<ChangeSetSerializerWithCount>
-export type ChangesetsEventsRetrieveResult = AxiosResponse<ChangeSetSerializerWithCount>
-export type ManufacturersListResult = AxiosResponse<PaginatedManufacturerList>
-export type ManufacturersCreateResult = AxiosResponse<Manufacturer>
-export type ManufacturersRetrieveResult = AxiosResponse<Manufacturer>
-export type ManufacturersUpdateResult = AxiosResponse<Manufacturer>
-export type ManufacturersPartialUpdateResult = AxiosResponse<Manufacturer>
-export type ManufacturersDestroyResult = AxiosResponse<void>
-export type NodesListResult = AxiosResponse<PaginatedNodeList>
-export type NodesRetrieveResult = AxiosResponse<Node>
-export type NodesUpdateResult = AxiosResponse<Node>
-export type NodesPartialUpdateResult = AxiosResponse<Node>
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<Node>(
+      {url: `/api/v1/nodes/${id}/`, method: 'get'
+    },
+      options);
+    }
+  
+/**
+ * Fetch information about nodes.
+ */
+export const nodesUpdate = (
+    id: string,
+    node: BodyType<NonReadonly<Node>>,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<Node>(
+      {url: `/api/v1/nodes/${id}/`, method: 'put',
+      headers: {'Content-Type': 'application/json', },
+      data: node
+    },
+      options);
+    }
+  
+/**
+ * Fetch information about nodes.
+ */
+export const nodesPartialUpdate = (
+    id: string,
+    patchedNode: BodyType<NonReadonly<PatchedNode>>,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<Node>(
+      {url: `/api/v1/nodes/${id}/`, method: 'patch',
+      headers: {'Content-Type': 'application/json', },
+      data: patchedNode
+    },
+      options);
+    }
+  
+export type AccountsProfileRetrieveResult = NonNullable<Awaited<ReturnType<typeof accountsProfileRetrieve>>>
+export type AccountsProfileUpdateResult = NonNullable<Awaited<ReturnType<typeof accountsProfileUpdate>>>
+export type AccountsProfilePartialUpdateResult = NonNullable<Awaited<ReturnType<typeof accountsProfilePartialUpdate>>>
+export type AssetEventsListResult = NonNullable<Awaited<ReturnType<typeof assetEventsList>>>
+export type AssetEventsRetrieveResult = NonNullable<Awaited<ReturnType<typeof assetEventsRetrieve>>>
+export type AssetModelsListResult = NonNullable<Awaited<ReturnType<typeof assetModelsList>>>
+export type AssetModelsCreateResult = NonNullable<Awaited<ReturnType<typeof assetModelsCreate>>>
+export type AssetModelsRetrieveResult = NonNullable<Awaited<ReturnType<typeof assetModelsRetrieve>>>
+export type AssetModelsUpdateResult = NonNullable<Awaited<ReturnType<typeof assetModelsUpdate>>>
+export type AssetModelsPartialUpdateResult = NonNullable<Awaited<ReturnType<typeof assetModelsPartialUpdate>>>
+export type AssetModelsDestroyResult = NonNullable<Awaited<ReturnType<typeof assetModelsDestroy>>>
+export type AssetsListResult = NonNullable<Awaited<ReturnType<typeof assetsList>>>
+export type AssetsRetrieveResult = NonNullable<Awaited<ReturnType<typeof assetsRetrieve>>>
+export type AuthTokenCreateResult = NonNullable<Awaited<ReturnType<typeof authTokenCreate>>>
+export type AuthTokenRefreshCreateResult = NonNullable<Awaited<ReturnType<typeof authTokenRefreshCreate>>>
+export type AuthTokenVerifyCreateResult = NonNullable<Awaited<ReturnType<typeof authTokenVerifyCreate>>>
+export type ChangesetsListResult = NonNullable<Awaited<ReturnType<typeof changesetsList>>>
+export type ChangesetsRetrieveResult = NonNullable<Awaited<ReturnType<typeof changesetsRetrieve>>>
+export type ChangesetsEventsRetrieveResult = NonNullable<Awaited<ReturnType<typeof changesetsEventsRetrieve>>>
+export type ManufacturersListResult = NonNullable<Awaited<ReturnType<typeof manufacturersList>>>
+export type ManufacturersCreateResult = NonNullable<Awaited<ReturnType<typeof manufacturersCreate>>>
+export type ManufacturersRetrieveResult = NonNullable<Awaited<ReturnType<typeof manufacturersRetrieve>>>
+export type ManufacturersUpdateResult = NonNullable<Awaited<ReturnType<typeof manufacturersUpdate>>>
+export type ManufacturersPartialUpdateResult = NonNullable<Awaited<ReturnType<typeof manufacturersPartialUpdate>>>
+export type ManufacturersDestroyResult = NonNullable<Awaited<ReturnType<typeof manufacturersDestroy>>>
+export type NodesListResult = NonNullable<Awaited<ReturnType<typeof nodesList>>>
+export type NodesRetrieveResult = NonNullable<Awaited<ReturnType<typeof nodesRetrieve>>>
+export type NodesUpdateResult = NonNullable<Awaited<ReturnType<typeof nodesUpdate>>>
+export type NodesPartialUpdateResult = NonNullable<Awaited<ReturnType<typeof nodesPartialUpdate>>>
