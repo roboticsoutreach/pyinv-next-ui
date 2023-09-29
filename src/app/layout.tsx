@@ -1,3 +1,4 @@
+import NextAuthProvider from "@/components/NextAuthProvider";
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -11,7 +12,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <body className={inter.className}>{children}</body>
+            <NextAuthProvider>
+                <body className={inter.className}>{children}</body>
+            </NextAuthProvider>
         </html>
     );
 }
