@@ -1,3 +1,5 @@
+"use client";
+
 import { AppBar, Toolbar, Typography, Box, Button } from "@mui/material";
 
 export default function NavBar() {
