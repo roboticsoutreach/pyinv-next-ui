@@ -12,14 +12,19 @@ export const authOptions: AuthOptions = {
             async authorize(credentials) {
                 if (!credentials) return null;
 
-                const authResponse = await authTokenCreate(credentials);
+                try {
+                    const authResponse = await authTokenCreate(credentials);
 
-                if (authResponse) {
-                    return {
-                        id: authResponse.username,
-                        username: authResponse.username,
-                    };
-                } else return null;
+                    if (authResponse) {
+                        return {
+                            id: authResponse.username,
+                            username: authResponse.username,
+                        };
+                    } else return null;
+                } catch (error) {
+                    console.log(error);
+                    return null;
+                }
             },
         }),
     ],
