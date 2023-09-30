@@ -3,9 +3,15 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import InventoryTreeNode from "./InventoryTreeNode";
 import { Node } from "@/lib/api";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-export default function InventoryTree({ nodes }: { nodes: Node[] }) {
+export default function InventoryTree({
+    nodes,
+    onSelectedChanged,
+}: {
+    nodes: Node[];
+    onSelectedChanged?: (selected: string[]) => void;
+}) {
     const [selected, setSelected] = useState<string[]>([]);
 
     const handleSelect = (event: React.SyntheticEvent, nodeIds: string[]) => {
@@ -27,6 +33,10 @@ export default function InventoryTree({ nodes }: { nodes: Node[] }) {
                 )),
         [nodes]
     );
+
+    useEffect(() => {
+        onSelectedChanged?.(selected);
+    });
 
     return (
         <TreeView
